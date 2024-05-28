@@ -20,7 +20,7 @@ stages:
     - bash: echo $(Buid.ArtifactStagingDirectory)
     - bash: java -version
     - bash: node --version
-    - bash: python -- version
+    # - bash: python -- version
     - bash: mvn -version
     - bash: ls -R $(Buid.ArtifactStagingDirectory)
     - task: CopyFiles@2
