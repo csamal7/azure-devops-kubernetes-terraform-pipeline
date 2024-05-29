@@ -22,8 +22,8 @@ data "aws_subnets" "subnets" {
   filter {
   name = "vpc-id"
   values = [aws_default_vpc.default.id]
+ }
 }
-
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
