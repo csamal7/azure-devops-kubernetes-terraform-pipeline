@@ -7,6 +7,15 @@ pool:
 steps:
 - script: echo Hello, K8S Terraform Azure!
   displayName: 'Run a one-line script'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'azure-resource-manager-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account show
+      env
+
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
