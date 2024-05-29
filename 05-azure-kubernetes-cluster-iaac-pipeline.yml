@@ -8,6 +8,22 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'azure-resource-manager-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      # Set the correct subscription
+      az account set --subscription "daae98de-d83f-4119-8b18-233a5a778f4f"
+      # Check if storage account exists
+      if ! az storage account show --name storageaccountcsamal05882 --resource-group terraform-backend-rg; then
+        echo "Storage account does not exist. Creating storage account..."
+        az storage account create --name storageaccountcsamal05882 --resource-group terraform-backend-rg --sku Standard_RAGRS --kind StorageV2 --encryption-services blob --access-tier hot --allow-blob-public-access false --https-only true --min-tls-version TLS1_2
+      else
+        echo "Storage account exists."
+      fi
+
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
