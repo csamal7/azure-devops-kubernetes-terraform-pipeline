@@ -26,7 +26,7 @@ data "aws_subnets" "subnets" {
 }
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
  # version                = "~> 2.12"
 }
@@ -56,11 +56,11 @@ module "in28minutes-cluster" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.in28minutes-cluster.cluster_name
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.in28minutes-cluster.cluster_name
 }
 
 
